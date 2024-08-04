@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "lite-server"
+    "dev": "concurrently \"lite-server\" \"tsc -w\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "lite-server": "^2.6.1"
+    "concurrently": "^8.2.2",
+    "lite-server": "^2.6.1",
+    "typescript": "^5.5.4"
   }
 }

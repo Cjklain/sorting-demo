@@ -1,1 +1,2 @@
-console.log('test')
+"use strict";
+console.log('qwe12e');
