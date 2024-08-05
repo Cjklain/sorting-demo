@@ -11,6 +11,14 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.9.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "lite-server": "^2.6.1",
     "typescript": "^5.5.4"
   }
