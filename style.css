@@ -9,6 +9,7 @@
 body {
   margin: 0;
   padding: 0;
+  width: 100vw;
   height: 100vh;
   font-family: "Roboto", sans-serif;
   color: white;
@@ -33,10 +34,31 @@ nav ol {
   list-style: none;
   display: flex;
   padding: 0;
+  border: none;
 }
 
 main {
   background-color: #f1f1f1;
+  color: black;
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  align-items: center;
+  justify-content: center;
+}
+
+.control {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.value-number {
+  background-color: #f1f1f1;
+  border: none;
+  font-size: 18px;
+  text-align: center;
 }
 
 footer {
@@ -45,4 +67,14 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
