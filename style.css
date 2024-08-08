@@ -41,9 +41,11 @@ main {
   background-color: #f1f1f1;
   color: black;
   display: grid;
-  grid-template-rows: 60px 1fr;
+  width: 100vw;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(80px, 100px) 1fr;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
 }
 
 .control {
@@ -57,8 +59,12 @@ main {
 .value-number {
   background-color: #f1f1f1;
   border: none;
-  font-size: 18px;
+  font-size: 22px;
   text-align: center;
+}
+
+#value-range {
+  width: 16vw;
 }
 
 footer {
