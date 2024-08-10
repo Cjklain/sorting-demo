@@ -43,13 +43,13 @@ main {
   display: grid;
   width: 100vw;
   grid-template-columns: 1fr;
-  grid-template-rows: minmax(80px, 100px) 1fr;
+  grid-template-rows: minmax(100px, 140px) 1fr;
   align-items: center;
   justify-items: center;
 }
 
 .control {
-  padding-top: 30px;
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,6 +65,20 @@ main {
 
 #value-range {
   width: 16vw;
+}
+
+.board {
+  min-width: 400px;
+  min-height: 400px;
+  border: solid 2px black;
+  display: flex;
+  gap: 3px;
+}
+
+.test {
+  min-width: 3px;
+  border: solid 1px black;
+  background-color: #1a4d2e;
 }
 
 footer {
