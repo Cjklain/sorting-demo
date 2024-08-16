@@ -19,13 +19,14 @@ const handleValueChange = (e: Event, element: HTMLInputElement) => {
 const generateElements = () => {
   board.replaceChildren();
   let elements: Array<HTMLDivElement> = [];
+
   for (let i = 0; i < +valueRange.value; i++) {
-    console.log("test");
     const el = document.createElement("div");
     el.classList.add("test");
     el.style.height = `${10 + i * 4}px`;
     elements.push(el);
   }
+
   // shuffle
   // elements.sort(() => Math.random() - 0.5);
 
@@ -45,3 +46,6 @@ valueNumber.addEventListener("input", (e) => handleValueChange(e, valueRange));
 
 valueRange.addEventListener("input", generateElements);
 valueNumber.addEventListener("input", generateElements);
+
+//init
+generateElements();
