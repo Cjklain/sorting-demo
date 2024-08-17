@@ -4,6 +4,11 @@ const board = document.querySelector(".board")! as HTMLInputElement;
 
 const MAXVALUE = 100;
 
+//init
+const main = () => {
+  generateElements();
+};
+
 const handleValueChange = (e: Event, element: HTMLInputElement) => {
   const target = e.target as HTMLInputElement;
 
@@ -47,5 +52,4 @@ valueNumber.addEventListener("input", (e) => handleValueChange(e, valueRange));
 valueRange.addEventListener("input", generateElements);
 valueNumber.addEventListener("input", generateElements);
 
-//init
-generateElements();
+main();

@@ -1,5 +1,6 @@
 :root {
   --green: #1a4d2e;
+  --white: #f1f1f1;
 }
 
 /* html {
@@ -27,7 +28,7 @@ header {
 }
 
 nav {
-  border-top: #f1f1f1;
+  border-top: var(--white);
 }
 
 nav ol {
@@ -35,15 +36,16 @@ nav ol {
   display: flex;
   padding: 0;
   border: none;
+  gap: 10px;
 }
 
 main {
-  background-color: #f1f1f1;
+  background-color: var(--white);
   color: black;
   display: grid;
   width: 100vw;
   grid-template-columns: 1fr;
-  grid-template-rows: minmax(100px, 140px) 1fr;
+  grid-template-rows: minmax(140px, 180px) 1fr;
   align-items: center;
   justify-items: center;
 }
@@ -57,7 +59,7 @@ main {
 }
 
 .value-number {
-  background-color: #f1f1f1;
+  background-color: var(--white);
   border: none;
   font-size: 22px;
   text-align: center;
@@ -78,7 +80,7 @@ main {
 .test {
   min-width: 3px;
   border: solid 1px black;
-  background-color: #1a4d2e;
+  background-color: var(--green);
 }
 
 footer {
@@ -93,6 +95,24 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+button {
+  background-color: var(--white);
+  padding: 7px;
+  font-size: medium;
+  border-radius: 10px;
+  font-weight: 600;
+  width: 13vh;
+  border: black solid 2px;
+}
+
+button:hover {
+  background-color: #bdbdbd;
+}
+
+.run {
+  margin-top: 25px;
 }
 
 input[type="number"] {
