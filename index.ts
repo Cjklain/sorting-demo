@@ -61,12 +61,56 @@ const generateElements = () => {
   }
 };
 
+const handleRun = () => {
+  // let selectedAlgo = "";
+  // selectButtons.forEach((button) => {
+  //   if (button.classList.contains("selected")) {
+  //     console.log(button.id);
+  //     selectedAlgo = button.id;
+  //   }
+  // });
+
+  // get type
+  const selectedAlgo = document.querySelector(".selected");
+  // get value
+  const selectedValue = +valueRange.value;
+
+  if (!selectedAlgo) {
+    return;
+  }
+
+  switch (selectedAlgo.id) {
+    case "selection-sort":
+      console.log("asd");
+      selectionSort(selectedValue);
+      break;
+    default:
+      return;
+  }
+};
+
+const wait = () => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, 300);
+  });
+};
+
+const selectionSort = async (value: number) => {
+  console.log(value);
+  const columns = board.children;
+
+  for (let i = 0; i < columns.length; i++) {
+    await wait();
+    columns[i].classList.add("test");
+  }
+};
+
 valueRange.addEventListener("input", (e) => handleValueChange(e, valueNumber));
 valueNumber.addEventListener("input", (e) => handleValueChange(e, valueRange));
 
 valueRange.addEventListener("input", generateElements);
 valueNumber.addEventListener("input", generateElements);
 selectButtons.forEach((button) => button.addEventListener("click", (e) => handleButtonClick(e)));
-// runButton.addEventListener("click", handleRun);
+runButton.addEventListener("click", handleRun);
 
 main();
