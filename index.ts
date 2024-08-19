@@ -81,7 +81,6 @@ const handleRun = () => {
 
   switch (selectedAlgo.id) {
     case "selection-sort":
-      console.log("asd");
       selectionSort(selectedValue);
       break;
     default:
@@ -91,17 +90,36 @@ const handleRun = () => {
 
 const wait = () => {
   return new Promise((resolve) => {
-    setTimeout(resolve, 300);
+    setTimeout(resolve, 1000);
   });
 };
 
 const selectionSort = async (value: number) => {
-  console.log(value);
-  const columns = board.children;
+  // console.log(value);
+  const columns = board.children as HTMLCollectionOf<HTMLElement>;
+  let min = 1000;
+  let lastMinIndex;
 
   for (let i = 0; i < columns.length; i++) {
     await wait();
-    columns[i].classList.add("test");
+
+    if (i > 0) {
+      const prevColumns = i - 1;
+      columns[prevColumns].classList.remove("column-active");
+      const value = +columns[prevColumns].style.height.replace("px", "");
+
+      if (value < min) {
+        //remove class form last one
+        if (lastMinIndex !== undefined) {
+          columns[lastMinIndex].classList.remove("column-min");
+        }
+        min = value;
+        lastMinIndex = prevColumns;
+        columns[prevColumns].classList.add("column-min");
+        // columns[prevColumns];
+      }
+    }
+    columns[i].classList.add("column-active");
   }
 };
 

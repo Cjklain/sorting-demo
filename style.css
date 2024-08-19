@@ -75,6 +75,8 @@ main {
   min-height: 400px;
   border: solid 2px black;
   display: flex;
+  justify-content: start;
+  flex-direction: row-reverse;
   gap: 3px;
 }
 
@@ -84,8 +86,12 @@ main {
   background-color: var(--green);
 }
 
-.test {
+.column-active {
   background-color: red;
+}
+
+.column-min {
+  background-color: lightblue;
 }
 
 footer {
