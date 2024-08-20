@@ -88,38 +88,50 @@ const handleRun = () => {
   }
 };
 
-const wait = () => {
+const wait = (ms: number) => {
   return new Promise((resolve) => {
-    setTimeout(resolve, 1000);
+    setTimeout(resolve, ms);
   });
 };
 
 const selectionSort = async (value: number) => {
   // console.log(value);
   const columns = board.children as HTMLCollectionOf<HTMLElement>;
-  let min = 1000;
-  let lastMinIndex;
-
+  // console.log(columns.length);
   for (let i = 0; i < columns.length; i++) {
-    await wait();
+    console.log(i, "iii");
+    let min = 1000;
+    let lastMinIndex;
+    for (let j = i; j < columns.length; j++) {
+      console.log(j, "j");
+      await wait(1000);
 
-    if (i > 0) {
-      const prevColumns = i - 1;
-      columns[prevColumns].classList.remove("column-active");
-      const value = +columns[prevColumns].style.height.replace("px", "");
+      if (j > i) {
+        const prevColumn = j - 1;
+        columns[prevColumn].classList.remove("column-active");
+        const value = +columns[prevColumn].style.height.replace("px", "");
 
-      if (value < min) {
-        //remove class form last one
-        if (lastMinIndex !== undefined) {
-          columns[lastMinIndex].classList.remove("column-min");
+        if (value < min) {
+          //remove class form last one
+          if (lastMinIndex !== undefined) {
+            columns[lastMinIndex].classList.remove("column-min");
+          }
+          min = value;
+          lastMinIndex = prevColumn;
+          columns[prevColumn].classList.add("column-min");
+          // columns[prevColumn];
         }
-        min = value;
-        lastMinIndex = prevColumns;
-        columns[prevColumns].classList.add("column-min");
-        // columns[prevColumns];
       }
+      columns[j].classList.add("column-active");
     }
-    columns[i].classList.add("column-active");
+    await wait(100);
+    columns[columns.length - 1].classList.remove("column-active");
+
+    if (lastMinIndex !== undefined) {
+      columns[lastMinIndex].classList.remove("column-min");
+      columns[lastMinIndex].classList.add("column-sorted");
+      columns[lastMinIndex].style.order = `${-(columns.length - i)}`;
+    }
   }
 };
 

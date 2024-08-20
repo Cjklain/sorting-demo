@@ -76,7 +76,7 @@ main {
   border: solid 2px black;
   display: flex;
   justify-content: start;
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
   gap: 3px;
 }
 
@@ -92,6 +92,10 @@ main {
 
 .column-min {
   background-color: lightblue;
+}
+
+.column-sorted {
+  background-color: gold;
 }
 
 footer {
