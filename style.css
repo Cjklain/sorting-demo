@@ -87,11 +87,11 @@ main {
 }
 
 .column-active {
-  background-color: red;
+  background-color: #3fa2f6 !important;
 }
 
 .column-min {
-  background-color: lightblue;
+  background-color: #88d66c;
 }
 
 .column-sorted {

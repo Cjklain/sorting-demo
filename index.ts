@@ -95,48 +95,39 @@ const wait = (ms: number) => {
 };
 
 const selectionSort = async (value: number) => {
-  // console.log(value);
   const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
-  // console.log(columns.length);
-  console.log(columns);
+
   for (let i = 0; i < columns.length; i++) {
-    // console.log(i, "iii");
     let min = 1000;
     let lastMinIndex;
     for (let j = i; j < columns.length; j++) {
-      // console.log(j, "j");
-      await wait(1000);
+      await wait(50);
 
-      // if (j > i) {
-      // const prevColumn = j - 1;
-      columns[j].classList.remove("column-active");
+      if (j >= 1) {
+        columns[j - 1].classList.remove("column-active");
+      }
       const value = +columns[j].style.height.replace("px", "");
-      // console.log(value);
-      // console.log(min);
       if (value < min) {
         //remove class form last one
-        console.log("asdasd");
         if (lastMinIndex !== undefined) {
           columns[lastMinIndex].classList.remove("column-min");
         }
+
         min = value;
         lastMinIndex = j;
-        // columns[prevColumn].classList.add("column-min");
+        columns[j].classList.add("column-min");
       }
-      // }
       columns[j].classList.add("column-active");
     }
-    await wait(1000);
+    await wait(50);
     columns[columns.length - 1].classList.remove("column-active");
-    console.log(lastMinIndex);
     if (lastMinIndex !== undefined) {
       columns[lastMinIndex].classList.remove("column-min");
       columns[lastMinIndex].classList.add("column-sorted");
-      columns[lastMinIndex].style.order = `${-(columns.length - i)}`;
       // swap place in array
       [columns[i], columns[lastMinIndex]] = [columns[lastMinIndex], columns[i]];
     }
-    // console.log(columns);
+    board.replaceChildren(...columns);
   }
 };
 
