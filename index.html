@@ -20,13 +20,13 @@
         <ol>
           <li>
             <!-- remove selected -->
-            <button class="algo selected" id="selection-sort">Selection Sort</button>
+            <button class="algo selected control-button" id="selection-sort">Selection Sort</button>
           </li>
           <li>
-            <button class="algo" id="2">temp</button>
+            <button class="algo control-button" id="2">temp</button>
           </li>
           <li>
-            <button class="algo" id="3">temp</button>
+            <button class="algo control-button" id="3">temp</button>
           </li>
         </ol>
       </nav>
@@ -35,7 +35,10 @@
       <div class="control">
         <input class="value-number" type="number" min="2" max="100" value="5" id="value-number" />
         <input type="range" min="2" max="100" value="5" step="1" id="value-range" />
-        <button class="run">Run</button>
+        <div>
+          <button class="run control-button">Run</button>
+          <button class="reset control-button">Reset</button>
+        </div>
       </div>
       <div class="board">
         <!-- <div class="test"></div>

@@ -3,9 +3,12 @@ const valueNumber = document.querySelector("#value-number")! as HTMLInputElement
 const board = document.querySelector(".board")! as HTMLInputElement;
 const selectButtons = document.querySelectorAll(".algo")! as NodeListOf<HTMLButtonElement>;
 const runButton = document.querySelector(".run")! as HTMLButtonElement;
+const resetButton = document.querySelector(".reset")! as HTMLButtonElement;
 
 const MAXVALUE = 100;
-
+const PACE = 50;
+let reset = false;
+let running = false;
 //init
 const main = () => {
   generateElements();
@@ -36,6 +39,10 @@ const handleButtonClick = (e: Event) => {
   target.classList.toggle("selected");
 };
 
+const handleReset = () => {
+  reset = true;
+};
+
 const generateElements = () => {
   board.replaceChildren();
   let elements: Array<HTMLDivElement> = [];
@@ -62,20 +69,16 @@ const generateElements = () => {
 };
 
 const handleRun = () => {
-  // let selectedAlgo = "";
-  // selectButtons.forEach((button) => {
-  //   if (button.classList.contains("selected")) {
-  //     console.log(button.id);
-  //     selectedAlgo = button.id;
-  //   }
-  // });
-
   // get type
   const selectedAlgo = document.querySelector(".selected");
   // get value
   const selectedValue = +valueRange.value;
 
   if (!selectedAlgo) {
+    return;
+  }
+
+  if (running) {
     return;
   }
 
@@ -96,12 +99,20 @@ const wait = (ms: number) => {
 
 const selectionSort = async (value: number) => {
   const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
+  running = true;
 
   for (let i = 0; i < columns.length; i++) {
     let min = 1000;
     let lastMinIndex;
     for (let j = i; j < columns.length; j++) {
-      await wait(50);
+      if (reset) {
+        generateElements();
+        reset = false;
+        running = false;
+        return;
+      }
+
+      await wait(PACE);
 
       if (j >= 1) {
         columns[j - 1].classList.remove("column-active");
@@ -119,7 +130,7 @@ const selectionSort = async (value: number) => {
       }
       columns[j].classList.add("column-active");
     }
-    await wait(50);
+    await wait(PACE);
     columns[columns.length - 1].classList.remove("column-active");
     if (lastMinIndex !== undefined) {
       columns[lastMinIndex].classList.remove("column-min");
@@ -129,6 +140,7 @@ const selectionSort = async (value: number) => {
     }
     board.replaceChildren(...columns);
   }
+  running = false;
 };
 
 valueRange.addEventListener("input", (e) => handleValueChange(e, valueNumber));
@@ -138,5 +150,6 @@ valueRange.addEventListener("input", generateElements);
 valueNumber.addEventListener("input", generateElements);
 selectButtons.forEach((button) => button.addEventListener("click", (e) => handleButtonClick(e)));
 runButton.addEventListener("click", handleRun);
+resetButton.addEventListener("click", handleReset);
 
 main();
