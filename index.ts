@@ -86,6 +86,8 @@ const handleRun = () => {
     case "selection-sort":
       selectionSort(selectedValue);
       break;
+    case "bubble-sort":
+      bubbleSort(selectedValue);
     default:
       return;
   }
@@ -100,11 +102,12 @@ const wait = (ms: number) => {
 const selectionSort = async (value: number) => {
   const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
   running = true;
+  const columnsLength = columns.length;
 
-  for (let i = 0; i < columns.length; i++) {
+  for (let i = 0; i < columnsLength; i++) {
     let min = 1000;
     let lastMinIndex;
-    for (let j = i; j < columns.length; j++) {
+    for (let j = i; j < columnsLength; j++) {
       if (reset) {
         generateElements();
         reset = false;
@@ -131,7 +134,7 @@ const selectionSort = async (value: number) => {
       columns[j].classList.add("column-active");
     }
     await wait(PACE);
-    columns[columns.length - 1].classList.remove("column-active");
+    columns[columnsLength - 1].classList.remove("column-active");
     if (lastMinIndex !== undefined) {
       columns[lastMinIndex].classList.remove("column-min");
       columns[lastMinIndex].classList.add("column-sorted");
@@ -139,6 +142,40 @@ const selectionSort = async (value: number) => {
       [columns[i], columns[lastMinIndex]] = [columns[lastMinIndex], columns[i]];
     }
     board.replaceChildren(...columns);
+  }
+  running = false;
+};
+
+const bubbleSort = async (value: number) => {
+  const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
+  running = true;
+  const columnsLength = columns.length;
+
+  for (let i = 0; i < columnsLength; i++) {
+    for (let j = 0; j < columnsLength - i; j++) {
+      if (j >= 1) {
+        if (reset) {
+          generateElements();
+          reset = false;
+          running = false;
+          return;
+        }
+
+        columns[j - 1].classList.add("column-active");
+        await wait(50);
+
+        const prevValue = +columns[j - 1].style.height.replace("px", "");
+        const value = +columns[j].style.height.replace("px", "");
+
+        if (prevValue > value) {
+          [columns[j - 1], columns[j]] = [columns[j], columns[j - 1]];
+          board.replaceChildren(...columns);
+        }
+        columns[j - 1].classList.remove("column-active");
+      }
+    }
+    columns[columnsLength - 1 - i].classList.remove("column-active");
+    columns[columnsLength - 1 - i].classList.add("column-sorted");
   }
   running = false;
 };
