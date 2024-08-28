@@ -88,6 +88,10 @@ const handleRun = () => {
       break;
     case "bubble-sort":
       bubbleSort(selectedValue);
+      break;
+    case "merge-sort":
+      mergeSort(selectedValue);
+      break;
     default:
       return;
   }
@@ -153,6 +157,7 @@ const bubbleSort = async (value: number) => {
 
   for (let i = 0; i < columnsLength; i++) {
     for (let j = 0; j < columnsLength - i; j++) {
+      let sorted = true;
       if (j >= 1) {
         if (reset) {
           generateElements();
@@ -168,16 +173,31 @@ const bubbleSort = async (value: number) => {
         const value = +columns[j].style.height.replace("px", "");
 
         if (prevValue > value) {
+          sorted = false;
           [columns[j - 1], columns[j]] = [columns[j], columns[j - 1]];
           board.replaceChildren(...columns);
         }
         columns[j - 1].classList.remove("column-active");
+
+        if (sorted) {
+          columns.forEach((column) => column.classList.add("column-sorted"));
+          running = false;
+          return;
+        }
       }
     }
     columns[columnsLength - 1 - i].classList.remove("column-active");
     columns[columnsLength - 1 - i].classList.add("column-sorted");
   }
   running = false;
+};
+
+const mergeSort = async (value: number) => {
+  const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
+  running = true;
+  const columnsLength = columns.length;
+
+  console.log("aszxczxcd");
 };
 
 valueRange.addEventListener("input", (e) => handleValueChange(e, valueNumber));
