@@ -156,8 +156,8 @@ const bubbleSort = async (value: number) => {
   const columnsLength = columns.length;
 
   for (let i = 0; i < columnsLength; i++) {
+    let sorted = true;
     for (let j = 0; j < columnsLength - i; j++) {
-      let sorted = true;
       if (j >= 1) {
         if (reset) {
           generateElements();
@@ -167,7 +167,7 @@ const bubbleSort = async (value: number) => {
         }
 
         columns[j - 1].classList.add("column-active");
-        await wait(50);
+        await wait(500);
 
         const prevValue = +columns[j - 1].style.height.replace("px", "");
         const value = +columns[j].style.height.replace("px", "");
@@ -178,14 +178,15 @@ const bubbleSort = async (value: number) => {
           board.replaceChildren(...columns);
         }
         columns[j - 1].classList.remove("column-active");
-
-        if (sorted) {
-          columns.forEach((column) => column.classList.add("column-sorted"));
-          running = false;
-          return;
-        }
       }
     }
+
+    if (sorted) {
+      columns.forEach((column) => column.classList.add("column-sorted"));
+      running = false;
+      return;
+    }
+
     columns[columnsLength - 1 - i].classList.remove("column-active");
     columns[columnsLength - 1 - i].classList.add("column-sorted");
   }
