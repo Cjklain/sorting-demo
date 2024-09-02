@@ -167,7 +167,7 @@ const bubbleSort = async (value: number) => {
         }
 
         columns[j - 1].classList.add("column-active");
-        await wait(500);
+        await wait(50);
 
         const prevValue = +columns[j - 1].style.height.replace("px", "");
         const value = +columns[j].style.height.replace("px", "");
@@ -198,6 +198,20 @@ const mergeSort = async (value: number) => {
   running = true;
   const columnsLength = columns.length;
 
+  const divide = (columnsLength: number) => {
+    // exit condition
+    // console.log(columnsLength);
+    // console.log(Math.floor(columnsLength / 2));
+    const mid = Math.floor(columnsLength / 2);
+    const left = columns.slice(0, mid);
+    const right = columns.slice(mid, columnsLength);
+    console.log(left);
+    console.log(right);
+    // divide(left);
+  };
+
+  divide(columnsLength);
+  running = false;
   console.log("aszxczxcd");
 };
 
