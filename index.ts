@@ -196,21 +196,45 @@ const bubbleSort = async (value: number) => {
 const mergeSort = async (value: number) => {
   const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
   running = true;
-  const columnsLength = columns.length;
+  // const columnsLength = columns.length;
 
-  const divide = (columnsLength: number) => {
+  const divide = (columns: HTMLElement[]) => {
     // exit condition
     // console.log(columnsLength);
     // console.log(Math.floor(columnsLength / 2));
+    const columnsLength = columns.length;
     const mid = Math.floor(columnsLength / 2);
     const left = columns.slice(0, mid);
     const right = columns.slice(mid, columnsLength);
+    merge(left);
     console.log(left);
     console.log(right);
     // divide(left);
   };
 
-  divide(columnsLength);
+  const merge = (columns: HTMLElement[]) => {
+    let sorted = [];
+    //more then 2?
+    if (columns.length > 2) {
+      divide(columns);
+    }
+
+    if (columns.length === 1) {
+      return [columns];
+    }
+
+    let heightZero = +columns[0].style.height.replace("px", "");
+    let heightOne = +columns[1].style.height.replace("px", "");
+    console.log(heightZero, heightOne);
+    if (heightZero > heightOne) {
+      return [columns[1], columns[0]];
+    }
+    // if
+    // dive
+    // merge
+  };
+
+  divide(columns);
   running = false;
   console.log("aszxczxcd");
 };
