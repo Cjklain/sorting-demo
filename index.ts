@@ -195,65 +195,37 @@ const bubbleSort = async (value: number) => {
 
 const mergeSort = async (value: number) => {
   const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
+  console.log(columns);
+  columns.forEach((column) => {
+    console.log(column.clientHeight);
+    // const value = +column.style.height.replace("px", "");
+    // console.log(value);
+  });
   running = true;
-  // const columnsLength = columns.length;
-  // console.log(columns);
-  const divide = (columns: HTMLElement[]) => {
-    // exit condition
-    // console.log(columnsLength);
-    // console.log(Math.floor(columnsLength / 2));
-    const columnsLength = columns.length;
-    const mid = Math.floor(columnsLength / 2);
-    const left = columns.slice(0, mid);
-    const right = columns.slice(mid, columnsLength);
-    sort(left);
-    // for 8 elements
-    merge(left);
-    console.log(left);
-    console.log(right);
-    // divide(left);
+
+  const merge = (left: HTMLElement[], right: HTMLElement[]) => {
+    console.log(left, right);
+
+    return left;
   };
 
-  const sort = (columns: HTMLElement[]) => {
-    let sorted = [];
-    //more then 2?
-    if (columns.length > 2) {
-      divide(columns);
+  const divide = (cols: HTMLElement[]): HTMLElement[] => {
+    console.log(cols);
+
+    if (cols.length <= 1) {
+      return cols;
     }
 
-    if (columns.length === 1) {
-      return [columns];
-    }
+    const mid = Math.floor(cols.length / 2);
+    const left = cols.slice(0, mid);
+    const right = cols.slice(mid, 0);
 
-    let heightZero = +columns[0].style.height.replace("px", "");
-    let heightOne = +columns[1].style.height.replace("px", "");
-    console.log(heightZero, heightOne);
-    if (heightZero > heightOne) {
-      // return [columns[1], columns[0]];
-      [columns[0], columns[1]] = [columns[1], columns[0]];
-    }
-    // if
-    // dive
-    // merge
+    console.log(mid);
+
+    return merge(divide(left), divide(right));
   };
 
-  const merge = (col: HTMLElement[]) => {
-    const colLen = col.length;
-    const mid = Math.floor(colLen / 2);
-    let merged = [];
-    for (let i = 0; i < mid; ) {
-      for (let j = mid; j < colLen - 1; ) {
-        if (col[i] < col[j]) {
-          merged.push(col[i]);
-          i++;
-        } else {
-          merged.push(col[j]);
-          j++;
-        }
-      }
-    }
-  };
-  divide(columns);
+  // divide(columns);
   running = false;
   console.log("aszxczxcd");
 };
