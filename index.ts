@@ -194,38 +194,80 @@ const bubbleSort = async (value: number) => {
 };
 
 const mergeSort = async (value: number) => {
-  const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
-  console.log(columns);
-  columns.forEach((column) => {
-    console.log(column.clientHeight);
-    // const value = +column.style.height.replace("px", "");
-    // console.log(value);
-  });
+  let columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
   running = true;
 
-  const merge = (left: HTMLElement[], right: HTMLElement[]) => {
-    console.log(left, right);
+  const merge = async (left: HTMLElement[], right: HTMLElement[]) => {
+    // console.log(left, right);
 
-    return left;
+    let result = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+    console.log("asd");
+
+    let combine = [...left, ...right];
+    combine.forEach((column) => column.classList.add("column-active"));
+    await wait(50);
+
+    const colIndex = (element: HTMLElement) => columns.findIndex((el) => el.clientHeight === element.clientHeight);
+
+    while (leftIndex < left.length && rightIndex < right.length) {
+      if (left[leftIndex].clientHeight < right[rightIndex].clientHeight) {
+        // const rightColIdx = colIndex(right[rightIndex]);
+        // const leftColIdx = colIndex(left[leftIndex]);
+        // [columns[leftColIdx], columns[rightColIdx]] = [columns[rightColIdx], columns[leftColIdx]];
+        // await wait(50);
+        // board.replaceChildren(...columns);
+        result.push(left[leftIndex]);
+        leftIndex++;
+      } else {
+        result.push(right[rightIndex]);
+        rightIndex++;
+      }
+    }
+
+    // rest
+    if (leftIndex < left.length) {
+      result = [...result, ...left.slice(leftIndex)];
+      // result.push(left[leftIndex]);
+      // leftIndex++;
+    }
+
+    if (rightIndex < right.length) {
+      result = [...result, ...right.slice(rightIndex)];
+      // result.push(right[rightIndex]);
+      // rightIndex++;
+    }
+
+    combine.forEach((column) => column.classList.remove("column-active"));
+
+    // handle colors on last iteration
+    if (combine.length === columns.length) {
+      combine.forEach((column) => column.classList.add("column-sorted"));
+      columns = result;
+      // board.replaceChildren(...columns);
+    }
+
+    return result;
   };
 
-  const divide = (cols: HTMLElement[]): HTMLElement[] => {
-    console.log(cols);
-
+  const divide = async (cols: HTMLElement[]): Promise<HTMLElement[]> => {
     if (cols.length <= 1) {
       return cols;
     }
 
     const mid = Math.floor(cols.length / 2);
     const left = cols.slice(0, mid);
-    const right = cols.slice(mid, 0);
+    const right = cols.slice(mid, cols.length);
 
-    console.log(mid);
-
-    return merge(divide(left), divide(right));
+    return merge(await divide(left), await divide(right));
   };
 
-  // divide(columns);
+  let test = await divide(columns);
+  // console.log(test);
+  // columns.forEach((column) => console.log(column.clientHeight));
+  // test.forEach((te) => console.log(te.clientHeight));
+  // console.log(test);
   running = false;
   console.log("aszxczxcd");
 };
