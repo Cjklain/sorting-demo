@@ -219,24 +219,48 @@ const mergeSort = async (value: number) => {
         // await wait(50);
         // board.replaceChildren(...columns);
         result.push(left[leftIndex]);
+        // columns[leftIndex + rightIndex] = result[leftIndex + rightIndex];
+        // await wait(200);
+        // board.replaceChildren(...columns);
         leftIndex++;
       } else {
         result.push(right[rightIndex]);
+        // columns[leftIndex + rightIndex] = result[leftIndex + rightIndex];
+        // await wait(200);
+        // board.replaceChildren(...columns);
         rightIndex++;
       }
     }
 
     // rest
-    if (leftIndex < left.length) {
-      result = [...result, ...left.slice(leftIndex)];
-      // result.push(left[leftIndex]);
-      // leftIndex++;
+    // if (leftIndex < left.length) {
+    //   result = [...result, ...left.slice(leftIndex)];
+    //   // result.push(left[leftIndex]);
+    //   // leftIndex++;
+    // }
+
+    while (leftIndex < left.length) {
+      // result = [...result, ...left.slice(leftIndex)];
+      result.push(left[leftIndex]);
+      // columns[leftIndex + rightIndex] = result[leftIndex + rightIndex];
+      // await wait(200);
+      // board.replaceChildren(...columns);
+      leftIndex++;
     }
 
-    if (rightIndex < right.length) {
-      result = [...result, ...right.slice(rightIndex)];
-      // result.push(right[rightIndex]);
-      // rightIndex++;
+    // if (rightIndex < right.length) {
+    // result = [...result, ...right.slice(rightIndex)];
+    // result.push(right[rightIndex]);
+    // rightIndex++;
+    // }
+
+    while (rightIndex < right.length) {
+      // result = [...result, ...right.slice(rightIndex)];
+      result.push(right[rightIndex]);
+      // columns[leftIndex + rightIndex] = result[leftIndex + rightIndex];
+      // await wait(200);
+      // board.replaceChildren(...columns);
+      rightIndex++;
     }
 
     combine.forEach((column) => column.classList.remove("column-active"));
@@ -266,7 +290,7 @@ const mergeSort = async (value: number) => {
   let test = await divide(columns);
   // console.log(test);
   // columns.forEach((column) => console.log(column.clientHeight));
-  // test.forEach((te) => console.log(te.clientHeight));
+  test.forEach((te) => console.log(te.clientHeight, "asd22"));
   // console.log(test);
   running = false;
   console.log("aszxczxcd");
