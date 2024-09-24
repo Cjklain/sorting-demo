@@ -197,19 +197,20 @@ const mergeSort = async (value: number) => {
   let columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
   running = true;
 
+  columns.forEach((column) => console.log(column.clientHeight));
+  // console.log("----------------------------------------------");
   const merge = async (left: HTMLElement[], right: HTMLElement[]) => {
     // console.log(left, right);
-
+    const colIndex = (element: HTMLElement) => columns.findIndex((el) => el.clientHeight === element.clientHeight);
     let result = [];
     let leftIndex = 0;
     let rightIndex = 0;
+    let startindex = colIndex(left[0]);
     console.log("asd");
 
     let combine = [...left, ...right];
     combine.forEach((column) => column.classList.add("column-active"));
-    await wait(50);
-
-    const colIndex = (element: HTMLElement) => columns.findIndex((el) => el.clientHeight === element.clientHeight);
+    // await wait(50);
 
     while (leftIndex < left.length && rightIndex < right.length) {
       if (left[leftIndex].clientHeight < right[rightIndex].clientHeight) {
@@ -219,15 +220,33 @@ const mergeSort = async (value: number) => {
         // await wait(50);
         // board.replaceChildren(...columns);
         result.push(left[leftIndex]);
-        // columns[leftIndex + rightIndex] = result[leftIndex + rightIndex];
-        // await wait(200);
-        // board.replaceChildren(...columns);
+
+        // back here
+        let lastIndex = colIndex(left[leftIndex]);
+        let temp = columns[leftIndex + rightIndex + startindex];
+        columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
+        columns[lastIndex] = temp;
+        //
+
+        // columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
+        await wait(200);
+        board.replaceChildren(...columns);
         leftIndex++;
       } else {
         result.push(right[rightIndex]);
-        // columns[leftIndex + rightIndex] = result[leftIndex + rightIndex];
-        // await wait(200);
-        // board.replaceChildren(...columns);
+        console.log(columns);
+
+        // back here
+        let lastIndex = colIndex(right[rightIndex]);
+        let temp = columns[leftIndex + rightIndex + startindex];
+        columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
+        columns[lastIndex] = temp;
+        //
+
+        // columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
+        console.log(columns);
+        await wait(200);
+        board.replaceChildren(...columns);
         rightIndex++;
       }
     }
@@ -242,9 +261,9 @@ const mergeSort = async (value: number) => {
     while (leftIndex < left.length) {
       // result = [...result, ...left.slice(leftIndex)];
       result.push(left[leftIndex]);
-      // columns[leftIndex + rightIndex] = result[leftIndex + rightIndex];
-      // await wait(200);
-      // board.replaceChildren(...columns);
+      columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
+      await wait(200);
+      board.replaceChildren(...columns);
       leftIndex++;
     }
 
@@ -257,9 +276,9 @@ const mergeSort = async (value: number) => {
     while (rightIndex < right.length) {
       // result = [...result, ...right.slice(rightIndex)];
       result.push(right[rightIndex]);
-      // columns[leftIndex + rightIndex] = result[leftIndex + rightIndex];
-      // await wait(200);
-      // board.replaceChildren(...columns);
+      columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
+      await wait(200);
+      board.replaceChildren(...columns);
       rightIndex++;
     }
 
@@ -287,10 +306,10 @@ const mergeSort = async (value: number) => {
     return merge(await divide(left), await divide(right));
   };
 
-  let test = await divide(columns);
+  let test = divide(columns);
   // console.log(test);
   // columns.forEach((column) => console.log(column.clientHeight));
-  test.forEach((te) => console.log(te.clientHeight, "asd22"));
+  // test.forEach((te) => console.log(te.clientHeight, "asd22"));
   // console.log(test);
   running = false;
   console.log("aszxczxcd");
