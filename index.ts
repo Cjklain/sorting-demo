@@ -197,87 +197,51 @@ const mergeSort = async (value: number) => {
   let columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
   running = true;
 
-  columns.forEach((column) => console.log(column.clientHeight));
-  // console.log("----------------------------------------------");
+  // columns.forEach((column) => console.log(column.clientHeight));
+
   const merge = async (left: HTMLElement[], right: HTMLElement[]) => {
-    // console.log(left, right);
     const colIndex = (element: HTMLElement) => columns.findIndex((el) => el.clientHeight === element.clientHeight);
     let result = [];
     let leftIndex = 0;
     let rightIndex = 0;
-    let startindex = colIndex(left[0]);
-    console.log("asd");
-
+    let startIndex = colIndex(left[0]);
     let combine = [...left, ...right];
+
     combine.forEach((column) => column.classList.add("column-active"));
-    // await wait(50);
 
     while (leftIndex < left.length && rightIndex < right.length) {
       if (left[leftIndex].clientHeight < right[rightIndex].clientHeight) {
-        // const rightColIdx = colIndex(right[rightIndex]);
-        // const leftColIdx = colIndex(left[leftIndex]);
-        // [columns[leftColIdx], columns[rightColIdx]] = [columns[rightColIdx], columns[leftColIdx]];
-        // await wait(50);
-        // board.replaceChildren(...columns);
         result.push(left[leftIndex]);
-
-        // back here
         let lastIndex = colIndex(left[leftIndex]);
-        let temp = columns[leftIndex + rightIndex + startindex];
-        columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
+        let temp = columns[leftIndex + rightIndex + startIndex];
+        columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
         columns[lastIndex] = temp;
-        //
-
-        // columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
-        await wait(200);
+        await wait(50);
         board.replaceChildren(...columns);
         leftIndex++;
       } else {
         result.push(right[rightIndex]);
-        console.log(columns);
-
-        // back here
         let lastIndex = colIndex(right[rightIndex]);
-        let temp = columns[leftIndex + rightIndex + startindex];
-        columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
+        let temp = columns[leftIndex + rightIndex + startIndex];
+        columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
         columns[lastIndex] = temp;
-        //
-
-        // columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
-        console.log(columns);
-        await wait(200);
         board.replaceChildren(...columns);
         rightIndex++;
       }
     }
 
-    // rest
-    // if (leftIndex < left.length) {
-    //   result = [...result, ...left.slice(leftIndex)];
-    //   // result.push(left[leftIndex]);
-    //   // leftIndex++;
-    // }
-
     while (leftIndex < left.length) {
-      // result = [...result, ...left.slice(leftIndex)];
       result.push(left[leftIndex]);
-      columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
-      await wait(200);
+      columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
+      // await wait(50);
       board.replaceChildren(...columns);
       leftIndex++;
     }
 
-    // if (rightIndex < right.length) {
-    // result = [...result, ...right.slice(rightIndex)];
-    // result.push(right[rightIndex]);
-    // rightIndex++;
-    // }
-
     while (rightIndex < right.length) {
-      // result = [...result, ...right.slice(rightIndex)];
       result.push(right[rightIndex]);
-      columns[leftIndex + rightIndex + startindex] = result[leftIndex + rightIndex];
-      await wait(200);
+      columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
+      // await wait(50);
       board.replaceChildren(...columns);
       rightIndex++;
     }
@@ -288,7 +252,6 @@ const mergeSort = async (value: number) => {
     if (combine.length === columns.length) {
       combine.forEach((column) => column.classList.add("column-sorted"));
       columns = result;
-      // board.replaceChildren(...columns);
     }
 
     return result;
@@ -307,12 +270,7 @@ const mergeSort = async (value: number) => {
   };
 
   let test = divide(columns);
-  // console.log(test);
-  // columns.forEach((column) => console.log(column.clientHeight));
-  // test.forEach((te) => console.log(te.clientHeight, "asd22"));
-  // console.log(test);
   running = false;
-  console.log("aszxczxcd");
 };
 
 valueRange.addEventListener("input", (e) => handleValueChange(e, valueNumber));
