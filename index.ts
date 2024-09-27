@@ -6,7 +6,7 @@ const runButton = document.querySelector(".run")! as HTMLButtonElement;
 const resetButton = document.querySelector(".reset")! as HTMLButtonElement;
 
 const MAXVALUE = 100;
-const PACE = 50;
+let PACE = 50;
 let reset = false;
 let running = false;
 //init
@@ -197,51 +197,57 @@ const mergeSort = async (value: number) => {
   let columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
   running = true;
 
-  // columns.forEach((column) => console.log(column.clientHeight));
-
   const merge = async (left: HTMLElement[], right: HTMLElement[]) => {
     const colIndex = (element: HTMLElement) => columns.findIndex((el) => el.clientHeight === element.clientHeight);
-    let result = [];
+    let result: HTMLElement[] = [];
     let leftIndex = 0;
     let rightIndex = 0;
     let startIndex = colIndex(left[0]);
     let combine = [...left, ...right];
 
+    const manageColumns = (lastIndex: number) => {
+      let temp = columns[leftIndex + rightIndex + startIndex];
+      columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
+      columns[lastIndex] = temp;
+      board.replaceChildren(...columns);
+    };
+
     combine.forEach((column) => column.classList.add("column-active"));
+    console.log("asasas");
+    if (reset) {
+      columns = [];
+      board.replaceChildren(...columns);
+      return columns;
+    }
 
     while (leftIndex < left.length && rightIndex < right.length) {
       if (left[leftIndex].clientHeight < right[rightIndex].clientHeight) {
         result.push(left[leftIndex]);
+        await wait(PACE);
         let lastIndex = colIndex(left[leftIndex]);
-        let temp = columns[leftIndex + rightIndex + startIndex];
-        columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
-        columns[lastIndex] = temp;
-        await wait(50);
-        board.replaceChildren(...columns);
+        manageColumns(lastIndex);
         leftIndex++;
       } else {
+        await wait(PACE);
         result.push(right[rightIndex]);
         let lastIndex = colIndex(right[rightIndex]);
-        let temp = columns[leftIndex + rightIndex + startIndex];
-        columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
-        columns[lastIndex] = temp;
-        board.replaceChildren(...columns);
+        manageColumns(lastIndex);
         rightIndex++;
       }
     }
 
     while (leftIndex < left.length) {
+      await wait(PACE);
       result.push(left[leftIndex]);
       columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
-      // await wait(50);
       board.replaceChildren(...columns);
       leftIndex++;
     }
 
     while (rightIndex < right.length) {
+      await wait(PACE);
       result.push(right[rightIndex]);
       columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
-      // await wait(50);
       board.replaceChildren(...columns);
       rightIndex++;
     }
@@ -265,12 +271,19 @@ const mergeSort = async (value: number) => {
     const mid = Math.floor(cols.length / 2);
     const left = cols.slice(0, mid);
     const right = cols.slice(mid, cols.length);
+    await wait(50);
 
     return merge(await divide(left), await divide(right));
   };
 
-  let test = divide(columns);
+  await divide(columns);
   running = false;
+
+  if (reset) {
+    reset = false;
+    generateElements();
+    return;
+  }
 };
 
 valueRange.addEventListener("input", (e) => handleValueChange(e, valueNumber));
