@@ -213,11 +213,11 @@ const mergeSort = async (value: number) => {
     };
 
     combine.forEach((column) => column.classList.add("column-active"));
-    console.log("asasas");
+
     if (reset) {
-      columns = [];
-      board.replaceChildren(...columns);
-      return columns;
+      reset = false;
+      generateElements();
+      throw new Error("Reset");
     }
 
     while (leftIndex < left.length && rightIndex < right.length) {
@@ -276,13 +276,10 @@ const mergeSort = async (value: number) => {
     return merge(await divide(left), await divide(right));
   };
 
-  await divide(columns);
-  running = false;
-
-  if (reset) {
-    reset = false;
-    generateElements();
-    return;
+  try {
+    await divide(columns);
+  } finally {
+    running = false;
   }
 };
 
