@@ -6,12 +6,28 @@ const runButton = document.querySelector(".run")! as HTMLButtonElement;
 const resetButton = document.querySelector(".reset")! as HTMLButtonElement;
 
 const MAXVALUE = 100;
-let PACE = 50;
+const PACE = 50;
 let reset = false;
 let running = false;
 //init
 const main = () => {
   generateElements();
+};
+
+const algoRunning = new Event("running");
+
+const notRunning = new Event("notRunning");
+
+const handleRunning = () => {
+  running = true;
+  valueNumber.disabled = true;
+  valueRange.disabled = true;
+};
+
+const handleNotRunning = () => {
+  valueNumber.disabled = false;
+  valueRange.disabled = false;
+  running = false;
 };
 
 const handleValueChange = (e: Event, element: HTMLInputElement) => {
@@ -40,7 +56,11 @@ const handleButtonClick = (e: Event) => {
 };
 
 const handleReset = () => {
-  reset = true;
+  if (running) {
+    reset = true;
+  } else {
+    generateElements();
+  }
 };
 
 const generateElements = () => {
@@ -71,8 +91,6 @@ const generateElements = () => {
 const handleRun = () => {
   // get type
   const selectedAlgo = document.querySelector(".selected");
-  // get value
-  const selectedValue = +valueRange.value;
 
   if (!selectedAlgo) {
     return;
@@ -84,13 +102,13 @@ const handleRun = () => {
 
   switch (selectedAlgo.id) {
     case "selection-sort":
-      selectionSort(selectedValue);
+      selectionSort();
       break;
     case "bubble-sort":
-      bubbleSort(selectedValue);
+      bubbleSort();
       break;
     case "merge-sort":
-      mergeSort(selectedValue);
+      mergeSort();
       break;
     default:
       return;
@@ -103,9 +121,9 @@ const wait = (ms: number) => {
   });
 };
 
-const selectionSort = async (value: number) => {
+const selectionSort = async () => {
   const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
-  running = true;
+  runButton.dispatchEvent(notRunning);
   const columnsLength = columns.length;
 
   for (let i = 0; i < columnsLength; i++) {
@@ -115,7 +133,7 @@ const selectionSort = async (value: number) => {
       if (reset) {
         generateElements();
         reset = false;
-        running = false;
+        runButton.dispatchEvent(notRunning);
         return;
       }
 
@@ -147,12 +165,12 @@ const selectionSort = async (value: number) => {
     }
     board.replaceChildren(...columns);
   }
-  running = false;
+  runButton.dispatchEvent(notRunning);
 };
 
-const bubbleSort = async (value: number) => {
+const bubbleSort = async () => {
   const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
-  running = true;
+  runButton.dispatchEvent(algoRunning);
   const columnsLength = columns.length;
 
   for (let i = 0; i < columnsLength; i++) {
@@ -162,7 +180,7 @@ const bubbleSort = async (value: number) => {
         if (reset) {
           generateElements();
           reset = false;
-          running = false;
+          runButton.dispatchEvent(notRunning);
           return;
         }
 
@@ -183,20 +201,19 @@ const bubbleSort = async (value: number) => {
 
     if (sorted) {
       columns.forEach((column) => column.classList.add("column-sorted"));
-      running = false;
+      runButton.dispatchEvent(notRunning);
       return;
     }
 
     columns[columnsLength - 1 - i].classList.remove("column-active");
     columns[columnsLength - 1 - i].classList.add("column-sorted");
   }
-  running = false;
+  runButton.dispatchEvent(notRunning);
 };
 
-const mergeSort = async (value: number) => {
+const mergeSort = async () => {
   let columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
-  running = true;
-
+  runButton.dispatchEvent(algoRunning);
   const merge = async (left: HTMLElement[], right: HTMLElement[]) => {
     const colIndex = (element: HTMLElement) => columns.findIndex((el) => el.clientHeight === element.clientHeight);
     let result: HTMLElement[] = [];
@@ -271,7 +288,7 @@ const mergeSort = async (value: number) => {
     const mid = Math.floor(cols.length / 2);
     const left = cols.slice(0, mid);
     const right = cols.slice(mid, cols.length);
-    await wait(50);
+    await wait(PACE);
 
     return merge(await divide(left), await divide(right));
   };
@@ -279,9 +296,12 @@ const mergeSort = async (value: number) => {
   try {
     await divide(columns);
   } finally {
-    running = false;
+    runButton.dispatchEvent(notRunning);
   }
 };
+
+runButton.addEventListener("running", handleRunning);
+runButton.addEventListener("notRunning", handleNotRunning);
 
 valueRange.addEventListener("input", (e) => handleValueChange(e, valueNumber));
 valueNumber.addEventListener("input", (e) => handleValueChange(e, valueRange));
