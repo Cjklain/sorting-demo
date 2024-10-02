@@ -73,7 +73,6 @@ const generateElements = () => {
     el.style.height = `${10 + i * 4}px`;
     elements.push(el);
   }
-
   // shuffle
   // elements.sort(() => Math.random() - 0.5);
 
@@ -123,7 +122,7 @@ const wait = (ms: number) => {
 
 const selectionSort = async () => {
   const columns = Array.from(board.children as HTMLCollectionOf<HTMLElement>);
-  runButton.dispatchEvent(notRunning);
+  runButton.dispatchEvent(algoRunning);
   const columnsLength = columns.length;
 
   for (let i = 0; i < columnsLength; i++) {
