@@ -15,7 +15,7 @@ const selectButtons = document.querySelectorAll(".algo");
 const runButton = document.querySelector(".run");
 const resetButton = document.querySelector(".reset");
 const MAXVALUE = 100;
-const PACE = 50;
+const PACE = 20;
 let reset = false;
 let running = false;
 //init
@@ -226,14 +226,12 @@ const mergeSort = () => __awaiter(void 0, void 0, void 0, function* () {
             }
         }
         while (leftIndex < left.length) {
-            yield wait(PACE);
             result.push(left[leftIndex]);
             columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
             board.replaceChildren(...columns);
             leftIndex++;
         }
         while (rightIndex < right.length) {
-            yield wait(PACE);
             result.push(right[rightIndex]);
             columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
             board.replaceChildren(...columns);

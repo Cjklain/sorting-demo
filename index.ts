@@ -6,7 +6,7 @@ const runButton = document.querySelector(".run")! as HTMLButtonElement;
 const resetButton = document.querySelector(".reset")! as HTMLButtonElement;
 
 const MAXVALUE = 100;
-const PACE = 50;
+const PACE = 20;
 let reset = false;
 let running = false;
 //init
@@ -253,7 +253,6 @@ const mergeSort = async () => {
     }
 
     while (leftIndex < left.length) {
-      await wait(PACE);
       result.push(left[leftIndex]);
       columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
       board.replaceChildren(...columns);
@@ -261,7 +260,6 @@ const mergeSort = async () => {
     }
 
     while (rightIndex < right.length) {
-      await wait(PACE);
       result.push(right[rightIndex]);
       columns[leftIndex + rightIndex + startIndex] = result[leftIndex + rightIndex];
       board.replaceChildren(...columns);
