@@ -6,7 +6,7 @@ const runButton = document.querySelector(".run")! as HTMLButtonElement;
 const resetButton = document.querySelector(".reset")! as HTMLButtonElement;
 
 const MAXVALUE = 100;
-const PACE = 20;
+const PACE = 50;
 let reset = false;
 let running = false;
 //init

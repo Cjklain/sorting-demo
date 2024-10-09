@@ -15,7 +15,7 @@ const selectButtons = document.querySelectorAll(".algo");
 const runButton = document.querySelector(".run");
 const resetButton = document.querySelector(".reset");
 const MAXVALUE = 100;
-const PACE = 20;
+const PACE = 50;
 let reset = false;
 let running = false;
 //init
