@@ -2,7 +2,7 @@
 
 #### Live Demo <https://cjklain.github.io/sorting-demo/>
 
-#### Video Demo: <URL>
+#### Video Demo: <https://www.youtube.com/watch?v=EMVbrX4Ccik>
 
 #### Description:
 
